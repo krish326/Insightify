@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "chart.js": "^4.4.9",
+    "lucide-react": "^0.515.0",
+    "react-chartjs-2": "^5.3.0"
+  }
+}
