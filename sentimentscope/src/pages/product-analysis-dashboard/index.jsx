@@ -159,12 +159,18 @@ function ProductAnalysisDashboard() {
                           productInfo={analysisResult.productInfo}
                           overallSentiment={analysisResult.overallSentiment}
                       />
+
+
+
+
                     </div>
 
                     {/* Reviews Section */}
+
+
                     <div className="lg:col-span-1">
                       <ReviewsList
-                          reviews={analysisResult.reviews || []}
+                          reviews={analysisResult.reviewAnalyses || []}
                           totalReviews={analysisResult.totalReviews}
                       />
                     </div>
