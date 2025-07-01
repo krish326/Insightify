@@ -41,31 +41,6 @@ public class ReviewRestController {
         String url = request.getUrl();
         ScrapeAndAnalyzeResponse compositeResponse = new ScrapeAndAnalyzeResponse();
         List<ReviewAnalysisResult> analysisResults = new ArrayList<>();
-        compositeResponse.setReviewAnalyses(analysisResults);
-
-        Map<String, SentimentBreakdown> aspectBreakdownMap = new HashMap<>();
-
-        for (ReviewAnalysisResult result : analysisResults) {
-            // Loop through the aspects found in this specific review
-            for (Map.Entry<String, String> aspectEntry : result.getAspectSentiments().entrySet()) {
-                String aspectName = aspectEntry.getKey();
-                String sentiment = aspectEntry.getValue();
-
-                // Get or create a breakdown object for this aspect
-                SentimentBreakdown breakdown = aspectBreakdownMap.computeIfAbsent(aspectName, k -> new SentimentBreakdown());
-
-                // Increment the count based on the sentiment
-                if (sentiment.toLowerCase().contains("positive")) {
-                    breakdown.incrementPositive();
-                } else if (sentiment.toLowerCase().contains("negative")) {
-                    breakdown.incrementNegative();
-                } else {
-                    breakdown.incrementNeutral();
-                }
-            }
-        }
-
-        compositeResponse.setAspectBreakdown(aspectBreakdownMap);
 
         try {
             System.out.println("Attempting to scrape reviews from: " + url);
@@ -106,6 +81,26 @@ public class ReviewRestController {
 
             compositeResponse.setReviewAnalyses(analysisResults);
             compositeResponse.setTotalReviews(reviews.size());
+
+            Map<String, SentimentBreakdown> aspectBreakdownMap = new HashMap<>();
+            for (ReviewAnalysisResult result : analysisResults) {
+                for (Map.Entry<String, String> aspectEntry : result.getAspectSentiments().entrySet()) {
+                    String aspectName = aspectEntry.getKey();
+                    String sentiment = aspectEntry.getValue();
+
+                    SentimentBreakdown breakdown = aspectBreakdownMap.computeIfAbsent(aspectName, k -> new SentimentBreakdown());
+
+                    if (sentiment.toLowerCase().contains("positive")) {
+                        breakdown.incrementPositive();
+                    } else if (sentiment.toLowerCase().contains("negative")) {
+                        breakdown.incrementNegative();
+                    } else {
+                        breakdown.incrementNeutral();
+                    }
+                }
+            }
+            compositeResponse.setAspectBreakdown(aspectBreakdownMap);
+
 
             // 4. Calculate and set the top-level overall sentiment
             long positiveCount = analysisResults.stream()
