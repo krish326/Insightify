@@ -26,7 +26,7 @@ public class FlipkartReviewScraper {
     private final WebDriverWait quickWait;
 
     // Primary selectors (from your working version)
-    private static final String ALL_REVIEWS_BUTTON_XPATH = "//a[contains(@href, '/product-reviews/')]";
+    private static final String ALL_REVIEWS_BUTTON_XPATH = "//a[.//span[contains(text(),'reviews')]]";
     private static final String REVIEW_CONTAINER_SELECTOR = "div.col.EPCmJX.Ma1fCG";
     private static final String REVIEW_TEXT_SELECTOR = "div.ZmyHeo > div > div";
     private static final String READ_MORE_SELECTOR = "span.wTYmpv";
