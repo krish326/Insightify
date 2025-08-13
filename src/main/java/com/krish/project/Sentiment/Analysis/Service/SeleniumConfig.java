@@ -14,7 +14,7 @@ public class SeleniumConfig {
 
 
     @Bean(destroyMethod = "quit")
-    @Scope("singleton") // Or "prototype" if you need a fresh instance for every scrape
+    @Scope("singleton")
     public WebDriver chromeWebDriver() {
 
         ChromeOptions options = new ChromeOptions();
@@ -26,7 +26,7 @@ public class SeleniumConfig {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
 
-        // Add a User-Agent to mimic a real browser
+        //Adding details to mimic a real browser
         options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36");
 
         WebDriver driver = new ChromeDriver(options);
