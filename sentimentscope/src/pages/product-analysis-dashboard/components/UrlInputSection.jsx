@@ -52,7 +52,7 @@ function UrlInputSection({
               onChange={(e) => setUrl(e.target.value)}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
-              placeholder="Enter product URL for analysis (e.g., Amazon, eBay, etc.)"
+              placeholder="Enter product URL for analysis (e.g. Amazon, Flipkart, etc.)"
               disabled={loading}
               className="w-full pl-12 pr-4 py-4 text-lg bg-surface rounded-xl border-0 focus:outline-none focus:ring-0 placeholder-text-secondary disabled:opacity-50 disabled:cursor-not-allowed"
             />
@@ -127,7 +127,7 @@ function UrlInputSection({
           Try with popular e-commerce platforms:
         </p>
         <div className="flex flex-wrap justify-center gap-2">
-          {['Amazon', 'eBay', 'Walmart', 'Best Buy', 'Target'].map((platform) => (
+          {['Amazon', 'Flipkart'].map((platform) => (
             <span 
               key={platform}
               className="px-3 py-1 bg-secondary-100 text-secondary-600 text-sm rounded-full"
