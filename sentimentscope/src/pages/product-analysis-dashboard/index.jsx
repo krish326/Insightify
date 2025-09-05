@@ -19,60 +19,67 @@ function ProductAnalysisDashboard() {
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
 
-  const handleAnalyze = async () => {
-    if (!url.trim()) {
-      setError('Please enter a valid product URL');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    setProgress(0);
-    setAnalysisResult(null);
-
-    // Simulate progress
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 90) {
-          clearInterval(progressInterval);
-          return 90;
+    const handleAnalyze = async () => {
+        if (!url.trim()) {
+            setError('Please enter a valid product URL');
+            return;
         }
-        return prev + Math.random() * 15;
-      });
-    }, 500);
 
-    try {
-      const response = await axios.post('http://localhost:8080/api/scrape', {
-        url: url.trim()
-      });
-
-      clearInterval(progressInterval);
-      setProgress(100);
-
-      setTimeout(() => {
-        setAnalysisResult(response.data);
-        setLoading(false);
+        setLoading(true);
+        setError(null);
         setProgress(0);
-      }, 500);
+        setAnalysisResult(null);
 
-    } catch (err) {
-      clearInterval(progressInterval);
-      setLoading(false);
-      setProgress(0);
+        // Simulate progress
+        const progressInterval = setInterval(() => {
+            setProgress(prev => {
+                if (prev >= 90) {
+                    clearInterval(progressInterval);
+                    return 90;
+                }
+                return prev + Math.random() * 15;
+            });
+        }, 500);
 
-      if (err.response?.status === 400) {
-        setError('Invalid URL format. Please enter a valid product URL.');
-      } else if (err.response?.status === 404) {
-        setError('Product not found. Please check the URL and try again.');
-      } else if (err.response?.status >= 500) {
-        setError('Server error occurred. Please try again later.');
-      } else if (err.code === 'ECONNREFUSED') {
-        setError('Unable to connect to analysis service. Please check if the service is running.');
-      } else {
-        setError('Analysis failed. Please check your connection and try again.');
-      }
-    }
-  };
+        try {
+            const response = await axios.post('http://localhost:8080/api/scrape', {
+                url: url.trim()
+            });
+
+            clearInterval(progressInterval);
+            setProgress(100);
+
+            const analysisData = response.data;
+
+            // --- NEW LOGIC: Parse the summary ---
+            // This is the only part that's different from your original function.
+            if (analysisData.summary && typeof analysisData.summary === 'string') {
+                try {
+                    analysisData.structuredSummary = JSON.parse(analysisData.summary);
+                } catch (e) {
+                    console.error("Failed to parse summary JSON:", e);
+                    analysisData.structuredSummary = {
+                        summary_paragraph: "Sorry, the AI response was not in a readable format.",
+                        pros: [],
+                        cons: []
+                    };
+                }
+            }
+            // --- END NEW LOGIC ---
+
+            setTimeout(() => {
+                setAnalysisResult(analysisData);
+                setLoading(false);
+                setProgress(0);
+            }, 500);
+
+        } catch (err) {
+            clearInterval(progressInterval);
+            setLoading(false);
+            setProgress(0);
+            setError('Analysis failed. Please check your connection and try again.');
+        }
+    };
 
   const handleRetry = () => {
     setError(null);
@@ -154,11 +161,9 @@ function ProductAnalysisDashboard() {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Summary Section */}
                     <div className="lg:col-span-1">
-                      <SummaryCard
-                          summary={analysisResult.summary}
-                          productInfo={analysisResult.productInfo}
-                          overallSentiment={analysisResult.overallSentiment}
-                      />
+                        <SummaryCard
+                            analysisResult={analysisResult}
+                        />
 
 
 
