@@ -8,7 +8,6 @@ import Icon from 'components/AppIcon';
 import UrlInputSection from './components/UrlInputSection';
 import SummaryCard from './components/SummaryCard';
 import ReviewsList from './components/ReviewsList';
-// Add these imports at the top
 import OverallSentimentChart from 'components/OverallSentimentChart';
 import AspectChart from 'components/AspectChart';
 
@@ -51,8 +50,6 @@ function ProductAnalysisDashboard() {
 
             const analysisData = response.data;
 
-            // --- NEW LOGIC: Parse the summary ---
-            // This is the only part that's different from your original function.
             if (analysisData.summary && typeof analysisData.summary === 'string') {
                 try {
                     analysisData.structuredSummary = JSON.parse(analysisData.summary);
@@ -65,7 +62,6 @@ function ProductAnalysisDashboard() {
                     };
                 }
             }
-            // --- END NEW LOGIC ---
 
             setTimeout(() => {
                 setAnalysisResult(analysisData);

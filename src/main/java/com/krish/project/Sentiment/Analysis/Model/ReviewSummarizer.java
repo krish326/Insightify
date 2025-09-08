@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 @Service
 public class ReviewSummarizer {
 
-    // This now correctly reads the project ID from your application.properties
+    // reads the project ID from your application.properties
     @Value("${google.cloud.project.id}")
     private String projectId;
 
-    // *** FIX #1: This now correctly reads the location from your application.properties ***
+    // reads the location from your application.properties ***
     @Value("us-central1")
     private String location;
 
@@ -31,7 +31,6 @@ public class ReviewSummarizer {
 
         try (VertexAI vertexAi = new VertexAI(projectId, location)) {
 
-            // *** FIX #2: Using the stable "gemini-1.0-pro" model name ***
             GenerativeModel model = new GenerativeModel("gemini-2.0-flash-001", vertexAi);
 
             String prompt = "You are an expert product review analyst. Analyze the following user reviews for a mobile phone."
