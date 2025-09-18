@@ -8,8 +8,6 @@ function ReviewsList({ reviews: initialReviews = [], totalReviews = 0 }) {
     const [sortBy, setSortBy] = useState('recent');
 
     // =========================================================================================
-    // *** FIX: Transform the raw data from the backend into the structure this component needs ***
-    // =========================================================================================
     const transformedReviews = initialReviews.map((review, index) => {
         return {
             // --- Use original data fields that exist ---

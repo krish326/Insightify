@@ -4,7 +4,6 @@ import java.util.*;
 
 public class AspectBasedAnalyzer {
 
-    // Use a Map to group related keywords under a canonical aspect name
     private final Map<String, List<String>> aspectKeywords;
 
     public AspectBasedAnalyzer() {
@@ -18,11 +17,7 @@ public class AspectBasedAnalyzer {
         aspectKeywords.put("price", Arrays.asList("price", "cost", "value", "money", "budget", "expensive", "cheap"));
     }
 
-    /**
-     * Extracts canonical aspects from the review text by searching for related keywords.
-     * @param text The review text.
-     * @return A Set of canonical aspect names found in the text.
-     */
+
     public Set<String> extractAspects(String text) {
         Set<String> foundAspects = new HashSet<>();
         String loweredText = text.toLowerCase();
@@ -32,7 +27,6 @@ public class AspectBasedAnalyzer {
             String canonicalAspect = entry.getKey();
             List<String> keywords = entry.getValue();
 
-            // Check if any keyword for the current aspect is in the review text
             for (String keyword : keywords) {
                 if (loweredText.contains(keyword)) {
                     foundAspects.add(canonicalAspect);

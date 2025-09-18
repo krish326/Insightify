@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 @Service
 public class ReviewSummarizer {
 
-    // reads the project ID from your application.properties
+    // reads the project ID from application.properties
     @Value("${google.cloud.project.id}")
     private String projectId;
 
-    // reads the location from your application.properties ***
+    // reads the location from application.properties ***
     @Value("us-central1")
     private String location;
 
