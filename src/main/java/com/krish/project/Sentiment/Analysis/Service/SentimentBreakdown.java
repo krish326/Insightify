@@ -6,6 +6,7 @@ public class SentimentBreakdown {
     private int neutral = 0;
 
     // Getters and Setters
+    //Not using currenlty
     public int getPositive() { return positive; }
     public void setPositive(int positive) { this.positive = positive; }
     public int getNegative() { return negative; }

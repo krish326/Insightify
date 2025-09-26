@@ -40,6 +40,7 @@ public class ScrapeAndAnalyzeResponse {
 
 
     // Existing Getters and Setters...
+    // Not using currently
     public String getSummary() {
         return summary;
     }
