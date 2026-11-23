@@ -14,4 +14,4 @@ spring.h2.console.enabled=true
 
 
 google.cloud.project.id=API_KEY_HERE
-google.cloud.location=asia-south1
+google.cloud.location=asia-south1x

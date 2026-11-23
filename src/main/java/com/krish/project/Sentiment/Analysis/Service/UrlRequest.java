@@ -1,13 +1,6 @@
 package com.krish.project.Sentiment.Analysis.Service;
 
-public class UrlRequest {
-    private String url;
+import lombok.Data;
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-}
+@Data
+public class UrlRequest {private String url;}

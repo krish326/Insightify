@@ -1,18 +1,16 @@
 package com.krish.project.Sentiment.Analysis.Service;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SentimentBreakdown {
     private int positive = 0;
     private int negative = 0;
     private int neutral = 0;
-
-    // Getters and Setters
-    //Not using currenlty
-    public int getPositive() { return positive; }
-    public void setPositive(int positive) { this.positive = positive; }
-    public int getNegative() { return negative; }
-    public void setNegative(int negative) { this.negative = negative; }
-    public int getNeutral() { return neutral; }
-    public void setNeutral(int neutral) { this.neutral = neutral; }
 
     // Helper methods to increment counts
     public void incrementPositive() { this.positive++; }
